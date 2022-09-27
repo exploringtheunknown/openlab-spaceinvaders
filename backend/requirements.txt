@@ -1,0 +1,3 @@
+FastApi
+pydantic
+uvicorn
