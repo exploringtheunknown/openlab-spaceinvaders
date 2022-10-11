@@ -2,3 +2,5 @@ FastApi
 pydantic
 uvicorn
 pre-commit
+Adafruit-Blinka
+adafruit-circuitpython-neopixel
