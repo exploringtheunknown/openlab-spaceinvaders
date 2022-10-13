@@ -2,5 +2,7 @@ FastApi
 pydantic
 uvicorn
 pre-commit
+flake8
+black
 Adafruit-Blinka
 adafruit-circuitpython-neopixel

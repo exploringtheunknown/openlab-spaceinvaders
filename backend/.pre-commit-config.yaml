@@ -4,6 +4,7 @@ repos:
     hooks:
     - id: black
 -   repo: https://gitlab.com/pycqa/flake8
-    rev: 3.9.2
+    rev: 5.0.4
     hooks:
-    - id: flake8
+      - id: flake8
+        args: ["--config=./backend/.flake8", "--verbose"]
