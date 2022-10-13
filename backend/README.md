@@ -2,7 +2,7 @@
 
 ### Get started 
 
-Navigate to directory 'backend' and run the following commands to create a virtual environment: 
+Run the following commands to create a virtual environment: 
 
 ```
 python3 -m venv .venv
