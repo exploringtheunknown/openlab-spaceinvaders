@@ -2,8 +2,8 @@ from fastapi import HTTPException
 from .models import Light, LIGHT_TYPES
 
 
-def getLight(light_string: LIGHT_TYPES) -> Light:
-    match light_string:
+def getLight(light_type: LIGHT_TYPES) -> Light:
+    match light_type:
         case "square_light":
             return Light(pin_id=21, width_pixels=16, height_pixels=16)
         case "rectangular_light":
