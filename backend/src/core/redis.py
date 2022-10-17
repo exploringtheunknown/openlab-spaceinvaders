@@ -1,6 +1,5 @@
 from functools import lru_cache
-import aioredis
-from aioredis import Redis
+from aioredis import Redis, from_url
 from pydantic import BaseModel
 
 
@@ -8,7 +7,7 @@ class Redis(BaseModel):
     redis: Redis
 
     async def __init__(self):
-        self.redis = aioredis.from_url("redis://localhost")
+        self.redis = from_url("redis://localhost")
 
     async def get(self, key: str):
         return await self.redis.get(key)
