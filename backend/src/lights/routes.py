@@ -37,4 +37,6 @@ async def post_light_scrolling_text(model: ScrollingTextPostModel):
 
 @router.post("/rainbow")
 async def post_light_rainbow(model: RainbowPostModel):
+    light = getLight(model.light_type)
+    light.rainbow_cycle(model.cycles)
     return [{""}]
