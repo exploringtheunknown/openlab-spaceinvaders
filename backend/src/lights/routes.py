@@ -26,7 +26,7 @@ async def post_light_fill(model: FillPostModel):
 @router.post("/fill_by_index")
 async def post_light_fill_by_index(model: FillByIndexPostModel):
     light = getLight(model.light_type)
-    light.fill_by_index(model.color, {**model.index_list})
+    light.fill_by_index(model.index_items)
     return f"Started light {model.light_type} with color {model.color}"
 
 
