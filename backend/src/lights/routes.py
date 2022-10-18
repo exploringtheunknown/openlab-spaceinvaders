@@ -32,6 +32,8 @@ async def post_light_fill_by_index(model: FillByIndexPostModel):
 
 @router.post("/scrolling_text")
 async def post_light_scrolling_text(model: ScrollingTextPostModel):
+    light = getLight(model.light_type)
+    light.scrolling_text(model.cycles, model.text, model.text_speed, model.color)
     return [{""}]
 
 
