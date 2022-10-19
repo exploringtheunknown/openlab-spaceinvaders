@@ -12,7 +12,7 @@ const background = new Image();
 background.src = "images/topographic-pattern.png";
 
 const playerBulletController = new BulletController(canvas, 10, "#96FA9D", true);
-const enemyBulletController = new BulletController(canvas, 4, "white", false);
+const enemyBulletController = new BulletController(canvas, 4, "#FFFFFF", false);
 const enemyController = new EnemyController(
   canvas,
   enemyBulletController,
@@ -38,7 +38,7 @@ const game = () => {
 const displayGameOver = () => {
   if (isGameOver) {
     let text = didWin ? "You Win" : "Game Over";
-    let textOffset = didWin ? 3.5 : 5;
+    let textOffset = didWin ? 2.6 : 3;
 
     ctx.fillStyle = "white";
     ctx.font = "70px Arial";
