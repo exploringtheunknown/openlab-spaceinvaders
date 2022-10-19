@@ -1,6 +1,6 @@
-import EnemyController from "./EnemyController.js";
+import EnemyController from "../frontend/EnemyController.js";
 import Player from "./Player.js";
-import BulletController from "./BulletController.js";
+import BulletController from "../frontend/BulletController.js";
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
