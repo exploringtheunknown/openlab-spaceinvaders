@@ -23,7 +23,7 @@ const player = new Player(canvas, 3, playerBulletController);
 let isGameOver = false;
 let didWin = false;
 
-const game = () => {
+function game() {
   checkGameOver();
   ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
   displayGameOver();
@@ -35,7 +35,7 @@ const game = () => {
   }
 }
 
-const displayGameOver = () => {
+function displayGameOver() {
   if (isGameOver) {
     let text = didWin ? "You Win" : "Game Over";
     let textOffset = didWin ? 2.6 : 3;
@@ -46,7 +46,7 @@ const displayGameOver = () => {
   }
 }
 
-const checkGameOver = () => {
+function checkGameOver() {
   if (isGameOver) {
     return;
   }
