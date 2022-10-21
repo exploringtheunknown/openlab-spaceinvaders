@@ -13,16 +13,14 @@ let background,
   enemyController,
   player;
 
-let scene = "level1";
+let scene = "menu";
 let isSceneInitilized = false;
 
 function gameLoop() {
-  if (isSceneInitilized) {
-    checkGamestate();
-  }
-
   switch (scene) {
-    // case menu: return sceneMenu();
+    case "menu":
+      if (!isSceneInitilized) initMenu();
+      return sceneMenu();
     case "level1":
       if (!isSceneInitilized) initLevel1();
       return sceneLevel1();
@@ -35,25 +33,62 @@ function gameLoop() {
       return sceneVictory();
   }
 }
-
+function initMenu() {
+  background = new Image();
+  background.src = "images/topographic-pattern.png";
+  background.onload = function () {
+    isSceneInitilized = true;
+  };
+}
 function initLevel1() {
   background = new Image();
   background.src = "images/topographic-pattern.png";
-
-  playerBulletController = new BulletController(canvas, 10, "#96FA9D", true);
-  enemyBulletController = new BulletController(canvas, 4, "#FFFFFF", false);
-  const enemyData = {
+  playerBulletController = new BulletController({
+    canvas,
+    maxBulletsAtATime: 10,
+    bulletColor: "#96FA9D",
+    soundEnabled: true,
+  });
+  enemyBulletController = new BulletController({
+    canvas,
+    maxBulletsAtATime: 4,
+    bulletColor: "#FFFFFF",
+    soundEnabled: false,
+  });
+  enemyController = new EnemyController({
     canvas,
     enemyBulletController,
     playerBulletController,
     moveDownTimerDefault: 30,
     fireBulletTimerDefault: 10,
     velocityX: 1,
-    velocityY: 1
-  }
-  enemyController = new EnemyController(enemyData);
-  player = new Player(canvas, 3, playerBulletController);
+    velocityY: 1,
+  });
+  player = new Player({
+    canvas,
+    velocity: 3,
+    playerBulletController,
+  });
   isSceneInitilized = true;
+}
+
+function sceneMenu() {
+  ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+  ctx.font = "30px Arial";
+  ctx.fillStyle = "#96FA9D";
+  ctx.textBaseline = "middle";
+  ctx.textAlign = "center";
+  ctx.fillText("Queen Invaders", canvas.width / 2, canvas.height / 2 - 40);
+  ctx.font = "16px Arial";
+  ctx.fillText("touch to start.", canvas.width / 2, canvas.height / 2);
+
+  function startGame() {
+    canvas.removeEventListener("click", startGame);
+    isSceneInitilized = false;
+    scene = "level1";
+  }
+
+  canvas.addEventListener("click", startGame);
 }
 
 function sceneLevel1() {
@@ -62,6 +97,9 @@ function sceneLevel1() {
   player.draw(ctx);
   playerBulletController.draw(ctx);
   enemyBulletController.draw(ctx);
+  if (enemyBulletController.collideWith(player)) scene = "lose";
+  if (enemyController.collideWith(player)) scene = "lose";
+  if (enemyController.enemyRows.length === 0) scene = "win";
 }
 
 function sceneGameOver() {
@@ -80,12 +118,6 @@ function sceneVictory() {
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
   ctx.fillText("You Win!", game.width / 2, game.height / 2);
-}
-
-function checkGamestate() {
-  if (enemyBulletController.collideWith(player)) scene = "lose";
-  if (enemyController.collideWith(player)) scene = "lose";
-  if (enemyController.enemyRows.length === 0) scene = "win";
 }
 
 setInterval(gameLoop, 1000 / 60);

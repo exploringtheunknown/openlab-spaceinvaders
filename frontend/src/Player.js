@@ -3,10 +3,10 @@ export default class Player {
   leftPressed = false;
   shootPressed = false;
 
-  constructor(canvas, velocity, bulletController) {
+  constructor({ canvas, velocity, playerBulletController }) {
     this.canvas = canvas;
     this.velocity = velocity;
-    this.bulletController = bulletController;
+    this.bulletController = playerBulletController;
 
     this.x = this.canvas.width / 2;
     this.y = this.canvas.height - 75;
@@ -56,6 +56,7 @@ export default class Player {
       this.leftPressed = true;
     }
     if (event.code == "Space") {
+      console.log("FIIIIREEEEEEEEE");
       this.shootPressed = true;
     }
   };

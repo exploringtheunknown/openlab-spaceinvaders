@@ -13,8 +13,8 @@ export default class EnemyController {
   enemyRows = [];
 
   currentDirection = MovingDirection.right;
-  xVelocity = 0;
-  yVelocity = 0;
+  xVelocity = 1;
+  yVelocity = 1;
   defaultXVelocity = 1;
   defaultYVelocity = 1;
   moveDownTimer = 30;
@@ -27,7 +27,7 @@ export default class EnemyController {
     moveDownTimerDefault,
     fireBulletTimerDefault,
     velocityX,
-    velocityY
+    velocityY,
   }) {
     this.canvas = canvas;
     this.enemyBulletController = enemyBulletController;
@@ -138,7 +138,7 @@ export default class EnemyController {
     });
   }
 
-  happy = () => { };
+  happy = () => {};
 
   createEnemies() {
     this.enemyMap.forEach((row, rowIndex) => {
