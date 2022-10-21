@@ -10,6 +10,11 @@ canvas.height = 600;
 
 const background = new Image();
 background.src = "images/topographic-pattern.png";
+// background.onload = drawBackground
+
+// function drawBackground() {
+//   ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
+// }
 
 const playerBulletController = new BulletController(canvas, 10, "#96FA9D", true);
 const enemyBulletController = new BulletController(canvas, 4, "#FFFFFF", false);
@@ -23,7 +28,7 @@ const player = new Player(canvas, 3, playerBulletController);
 let isGameOver = false;
 let didWin = false;
 
-const game = () => {
+function game() {
   checkGameOver();
   ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
   displayGameOver();
@@ -35,18 +40,18 @@ const game = () => {
   }
 }
 
-const displayGameOver = () => {
+function displayGameOver() {
   if (isGameOver) {
-    let text = didWin ? "You Win" : "Game Over";
-    let textOffset = didWin ? 2.6 : 3;
-
-    ctx.fillStyle = "white";
+    const text = didWin ? "You Win" : "Game Over";
+    ctx.fillStyle = '#96FA9D';
     ctx.font = "70px Arial";
-    ctx.fillText(text, canvas.width / textOffset, canvas.height / 2);
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "center";
+    ctx.fillText(text, canvas.width / 2, canvas.height / 2);
   }
 }
 
-const checkGameOver = () => {
+function checkGameOver() {
   if (isGameOver) {
     return;
   }
@@ -65,4 +70,33 @@ const checkGameOver = () => {
   }
 }
 
-setInterval(game, 1000 / 60);
+function drawMenu() {
+  ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
+  ctx.font = "30px Arial";
+  ctx.fillStyle = '#96FA9D';
+  ctx.textBaseline = "middle";
+  ctx.textAlign = "center";
+  ctx.fillText("Queen Invaders", canvas.width / 2, canvas.height / 2 - 40);
+  ctx.font = "16px Arial";
+  ctx.fillText("Press 'Space' or touch to start.", canvas.width / 2, canvas.height / 2);
+  canvas.addEventListener('click', function () {
+    console.log("click1")
+  }, false);
+  onkeydown = function (e) {
+    if (e.code === 'Space') { 
+      console.log("click3", e)
+    }
+  }
+
+}
+
+
+let showMenu = true;
+
+if (showMenu) {
+  background.onload = drawMenu
+
+} else {
+  setInterval(game, 1000 / 60);
+}
+
