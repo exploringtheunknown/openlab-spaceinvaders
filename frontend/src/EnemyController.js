@@ -20,7 +20,7 @@ export default class EnemyController {
   moveDownTimer = 30;
   fireBulletTimer = 100;
 
-  constructor(
+  constructor({
     canvas,
     enemyBulletController,
     playerBulletController,
@@ -28,7 +28,7 @@ export default class EnemyController {
     fireBulletTimerDefault,
     velocityX,
     velocityY
-  ) {
+  }) {
     this.canvas = canvas;
     this.enemyBulletController = enemyBulletController;
     this.playerBulletController = playerBulletController;
@@ -138,7 +138,7 @@ export default class EnemyController {
     });
   }
 
-  happy = () => {};
+  happy = () => { };
 
   createEnemies() {
     this.enemyMap.forEach((row, rowIndex) => {

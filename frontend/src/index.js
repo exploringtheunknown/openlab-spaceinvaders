@@ -42,15 +42,16 @@ function initLevel1() {
 
   playerBulletController = new BulletController(canvas, 10, "#96FA9D", true);
   enemyBulletController = new BulletController(canvas, 4, "#FFFFFF", false);
-  enemyController = new EnemyController(
+  const enemyData = {
     canvas,
     enemyBulletController,
     playerBulletController,
-    30,
-    10,
-    1,
-    1
-  );
+    moveDownTimerDefault: 30,
+    fireBulletTimerDefault: 10,
+    velocityX: 1,
+    velocityY: 1
+  }
+  enemyController = new EnemyController(enemyData);
   player = new Player(canvas, 3, playerBulletController);
   isSceneInitilized = true;
 }
