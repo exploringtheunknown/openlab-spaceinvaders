@@ -17,19 +17,28 @@ export default class EnemyController {
   yVelocity = 0;
   defaultXVelocity = 1;
   defaultYVelocity = 1;
-  moveDownTimerDefault = 30;
-  moveDownTimer = this.moveDownTimerDefault;
-  fireBulletTimerDefault = 100;
-  fireBulletTimer = this.fireBulletTimerDefault;
+  moveDownTimer = 30;
+  fireBulletTimer = 100;
 
-  constructor(canvas, enemyBulletController, playerBulletController) {
+  constructor(
+    canvas,
+    enemyBulletController,
+    playerBulletController,
+    moveDownTimerDefault,
+    fireBulletTimerDefault,
+    velocityX,
+    velocityY
+  ) {
     this.canvas = canvas;
     this.enemyBulletController = enemyBulletController;
     this.playerBulletController = playerBulletController;
 
     this.enemyDeathSound = new Audio("sounds/enemy-death.wav");
     this.enemyDeathSound.volume = 0.1;
-
+    this.moveDownTimerDefault = moveDownTimerDefault;
+    this.fireBulletTimerDefault = fireBulletTimerDefault;
+    this.defaultXVelocity = velocityX;
+    this.defaultYVelocity = velocityY;
     this.createEnemies();
   }
 
