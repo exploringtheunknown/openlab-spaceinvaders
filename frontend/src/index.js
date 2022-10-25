@@ -120,4 +120,5 @@ function sceneVictory() {
   ctx.fillText("You Win!", game.width / 2, game.height / 2);
 }
 
+// use setInterval to update the game state
 setInterval(gameLoop, 1000 / 60);
