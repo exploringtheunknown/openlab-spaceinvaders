@@ -56,7 +56,6 @@ export default class Player {
       this.leftPressed = true;
     }
     if (event.code == "Space") {
-      console.log("FIIIIREEEEEEEEE");
       this.shootPressed = true;
     }
   };
