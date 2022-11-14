@@ -9,7 +9,7 @@ from .models.post_models import (
 )
 
 
-router = APIRouter(prefix="/lights", tags=["lights"])
+router = APIRouter(prefix="/lights", tags=["Lights"])
 
 
 @router.post("/")
