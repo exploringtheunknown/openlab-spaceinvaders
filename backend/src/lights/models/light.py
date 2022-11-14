@@ -1,67 +1,20 @@
-from http.client import HTTPException
+from fastapi import HTTPException
 from adafruit_blinka.microcontroller.generic_micropython import Pin
 from neopixel import GRB, NeoPixel
-from pydantic import BaseModel
-from typing import Tuple, List, Literal
-import time
 from adafruit_led_animation.animation.colorcycle import ColorCycle
 from adafruit_led_animation.animation.rainbow import Rainbow
 from adafruit_led_animation.animation.rainbowchase import RainbowChase
 from adafruit_led_animation.animation.rainbowcomet import RainbowComet
 from adafruit_led_animation.animation.rainbowsparkle import RainbowSparkle
 from PIL import Image, ImageDraw, ImageFont
-from adafruit_led_animation.color import RED, GREEN, BLUE
+from typing import List
+import time
+from .color import Color
+from .base_light import BaseLight
+from .post_models import FillByIndexItem, RainbowPostModel
 
 
-LIGHT_TYPES = Literal["square_light", "rectangle_light"]
-RAINBOW_TYPES = Literal["cycle", "chase", "comet", "sparkle"]
-
-
-class Color(BaseModel):
-    r: int
-    g: int
-    b: int
-
-    def values(self) -> Tuple[int, int, int]:
-        return (self.r, self.g, self.b)
-
-
-class FillPostModel(BaseModel):
-    color: Color
-    light_type: LIGHT_TYPES
-
-
-class FillByIndexItem(BaseModel):
-    index: int
-    color: Color
-
-
-class FillByIndexPostModel(BaseModel):
-    light_type: LIGHT_TYPES
-    index_items: List[FillByIndexItem]
-
-
-class ScrollingTextPostModel(BaseModel):
-    light_type: LIGHT_TYPES
-    text: str
-    cycles: int
-    text_speed: float
-    color: Color
-
-
-class RainbowPostModel(BaseModel):
-    light_type: LIGHT_TYPES
-    cycles: int
-    speed: float
-
-
-class ColorCyclePostModel(BaseModel):
-    light_type = LIGHT_TYPES
-    colors = List[Color]
-    speed: float
-
-
-class Light:
+class Light(BaseLight):
     neopixel: NeoPixel
     num_pixels: int
     height_pixels: int
@@ -117,43 +70,43 @@ class Light:
             while True:
                 animation.animate()
 
-        def scrolling_text(
-            self, cycles: int, text: str, text_speed: float, text_color: Color
-        ):
-            font = ImageFont.truetype("Quicksand-Regular.ttf", 8)
+    def scrolling_text(
+        self, cycles: int, text: str, text_speed: float, text_color: Color
+    ):
+        font = ImageFont.truetype("Quicksand-Regular.ttf", 8)
 
-            # Measure the size of our text
-            text_width, text_height = font.getsize(text)
-            # Create a new PIL image big enough to fit the text
-            image = Image.new(
-                "P",
-                (
-                    text_width + self.width_pixels + self.width_pixels,
-                    self.height_pixels,
-                ),
-                0,
-            )
-            draw = ImageDraw.Draw(image)
+        # Measure the size of our text
+        text_width, text_height = font.getsize(text)
+        # Create a new PIL image big enough to fit the text
+        image = Image.new(
+            "P",
+            (
+                text_width + self.width_pixels + self.width_pixels,
+                self.height_pixels,
+            ),
+            0,
+        )
+        draw = ImageDraw.Draw(image)
 
-            draw.text((self.width_pixels, -1), text, font=font, fill=255)
-            image.save("img.png", "PNG")
-            offset_x = 0
+        draw.text((self.width_pixels, -1), text, font=font, fill=255)
+        image.save("img.png", "PNG")
+        offset_x = 0
 
-            for c in range(cycles):
-                for x in range(self.width_pixels):
-                    for y in range(self.height_pixels):
-                        if image.getpixel((x + offset_x, y)) == 255:
-                            self.neopixel[self.getIndex(x, y)] = text_color.values()
+        for c in range(cycles):
+            for x in range(self.width_pixels):
+                for y in range(self.height_pixels):
+                    if image.getpixel((x + offset_x, y)) == 255:
+                        self.neopixel[self.getIndex(x, y)] = text_color.values()
 
-                        else:
-                            self.neopixel[self.getIndex(x, y)] = (0, 0, 0)
+                    else:
+                        self.neopixel[self.getIndex(x, y)] = (0, 0, 0)
 
-                offset_x += 1
-                if offset_x + self.width_pixels > image.size[0]:
-                    offset_x = 0
+            offset_x += 1
+            if offset_x + self.width_pixels > image.size[0]:
+                offset_x = 0
 
-                self.neopixel.show()
-                time.sleep(text_speed)  # scrolling text speed
+            self.neopixel.show()
+            time.sleep(text_speed)  # scrolling text speed
 
     def getIndex(self, x, y):
         x = self.width_pixels - x - 1
@@ -163,6 +116,6 @@ class Light:
             return (x * 8) + (7 - y)
 
     def color_cycle(self, colors: List[Color], speed):
-        colorcycle = ColorCycle(self.neopixel, colors=[RED, GREEN, BLUE], speed=0.4)
+        animation = ColorCycle(self.neopixel, colors=colors, speed=speed)
         while True:
-            colorcycle.animate()
+            animation.animate()
