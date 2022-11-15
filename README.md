@@ -17,8 +17,6 @@ The winning team will be decided by a combination of the QueensLab jury and the 
 - Keyboard
 - Mouse 
 - Mini USB controller
-- Cardboard
-- Duct tape
 
 
 ## ROLES SUGGESTIONS 
@@ -45,7 +43,8 @@ Trash the old start menu and design a new, eye-catching one. Don’t like the lo
 
 - Enhance and tweak the game, but avoid implementing game-breaking cheats, such as starting with extra points. If you are unsure about your masterplan, ask us!  
 - Don’t discriminate, don’t sabotage. 
-- Don’t break the tools, except for the cardboard. We don’t care about the cardboard. Go nuts with the cardboard. 
+- Don’t break the tools
+- Be careful if you must open the case of the Raspberry PI:s. If you are unsure about the positioning of the cables, ask us and we'll help you fix it! 
 
 
 ## SCHEDULE

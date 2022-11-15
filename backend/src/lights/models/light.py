@@ -6,6 +6,8 @@ from adafruit_led_animation.animation.rainbow import Rainbow
 from adafruit_led_animation.animation.rainbowchase import RainbowChase
 from adafruit_led_animation.animation.rainbowcomet import RainbowComet
 from adafruit_led_animation.animation.rainbowsparkle import RainbowSparkle
+from adafruit_led_animation.color import BLUE, GREEN, RED
+from neopixel import GRB, NeoPixel
 from PIL import Image, ImageDraw, ImageFont
 from typing import List
 import time
