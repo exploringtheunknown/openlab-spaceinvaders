@@ -28,6 +28,10 @@ Some stuff to look at if you're unsure of where to start:
 
 ## Example tasks / how to gather points
 
+- Implement and use the controller
+
+You can implement the controller that is provided, docs can be found here ([Gamepad API](https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API)).
+
 - Add highscore: 1 p
 
 Add a highscore menu to keep track of the points you scored within the game! Compare with your friends
