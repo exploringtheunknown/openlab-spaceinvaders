@@ -1,13 +1,13 @@
 from .models.base_light import BaseLight
+import os
 
 
 def getLight() -> BaseLight:
-    i = 10
-
-    if i == 10:
-
-        return BaseLight()
-    else:
+    user = os.environ.get("USER")
+    print(user)
+    if user == "pi":
         from .models.light import Light
 
         return Light(pin_id=21, width_pixels=32, height_pixels=8)
+    else:
+        return BaseLight()

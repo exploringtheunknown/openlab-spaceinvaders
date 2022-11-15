@@ -12,4 +12,5 @@ def animation_task(animation):
 
 
 def create_light_task(animation):
-    asyncio.create_task(animation_task(animation))
+    if animation is not None:
+        asyncio.create_task(animation_task(animation))
