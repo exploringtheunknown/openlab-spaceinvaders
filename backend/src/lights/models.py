@@ -1,17 +1,17 @@
-from http.client import HTTPException
-from adafruit_blinka.microcontroller.generic_micropython import Pin
-from neopixel import GRB, NeoPixel
-from pydantic import BaseModel
-from typing import Tuple, List, Literal
 import time
+from http.client import HTTPException
+from typing import List, Literal, Tuple
+
+from adafruit_blinka.microcontroller.generic_micropython import Pin
 from adafruit_led_animation.animation.colorcycle import ColorCycle
 from adafruit_led_animation.animation.rainbow import Rainbow
 from adafruit_led_animation.animation.rainbowchase import RainbowChase
 from adafruit_led_animation.animation.rainbowcomet import RainbowComet
 from adafruit_led_animation.animation.rainbowsparkle import RainbowSparkle
+from adafruit_led_animation.color import BLUE, GREEN, RED
+from neopixel import GRB, NeoPixel
 from PIL import Image, ImageDraw, ImageFont
-from adafruit_led_animation.color import RED, GREEN, BLUE
-
+from pydantic import BaseModel
 
 LIGHT_TYPES = Literal["square_light", "rectangle_light"]
 RAINBOW_TYPES = Literal["cycle", "chase", "comet", "sparkle"]
@@ -56,8 +56,8 @@ class RainbowPostModel(BaseModel):
 
 
 class ColorCyclePostModel(BaseModel):
-    light_type = LIGHT_TYPES
-    colors = List[Color]
+    light_type: LIGHT_TYPES
+    colors: List[Color]
     speed: float
 
 
