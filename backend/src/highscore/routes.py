@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 
-router = APIRouter(prefix="/highscore", tags=["highscore"])
+router = APIRouter(prefix="/highscore", tags=["Highscore"])
 
 
 @router.get("/highscore")
