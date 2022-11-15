@@ -6,7 +6,6 @@ from adafruit_led_animation.animation.rainbow import Rainbow
 from adafruit_led_animation.animation.rainbowchase import RainbowChase
 from adafruit_led_animation.animation.rainbowcomet import RainbowComet
 from adafruit_led_animation.animation.rainbowsparkle import RainbowSparkle
-from adafruit_led_animation.color import BLUE, GREEN, RED
 from neopixel import GRB, NeoPixel
 from PIL import Image, ImageDraw, ImageFont
 from typing import List
@@ -14,6 +13,7 @@ import time
 from .color import Color
 from .base_light import BaseLight
 from .post_models import FillByIndexItem, RainbowPostModel
+from ..tasks import cancel_light_tasks, create_light_task
 
 
 class Light(BaseLight):
@@ -23,6 +23,8 @@ class Light(BaseLight):
     width_pixels: int
 
     def __init__(self, pin_id: int, height_pixels: int, width_pixels: int):
+        cancel_light_tasks()
+
         num_pixels = height_pixels * width_pixels
 
         self.neopixel = NeoPixel(
@@ -68,9 +70,7 @@ class Light(BaseLight):
                     status_code=404, detail="Could not find suitable light"
                 )
 
-        if animation is not None:
-            while True:
-                animation.animate()
+        create_light_task(animation)
 
     def scrolling_text(
         self, cycles: int, text: str, text_speed: float, text_color: Color
@@ -119,5 +119,4 @@ class Light(BaseLight):
 
     def color_cycle(self, colors: List[Color], speed):
         animation = ColorCycle(self.neopixel, colors=colors, speed=speed)
-        while True:
-            animation.animate()
+        create_light_task(animation)
