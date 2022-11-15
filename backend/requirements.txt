@@ -8,3 +8,4 @@ Adafruit-Blinka
 adafruit-circuitpython-neopixel
 aioredis
 Pillow
+adafruit-circuitpython-led-animation
