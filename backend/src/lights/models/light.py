@@ -1,4 +1,4 @@
-from fastapi import HTTPException
+from fastapi import HTTPException, BackgroundTasks
 from adafruit_blinka.microcontroller.generic_micropython import Pin
 from neopixel import GRB, NeoPixel
 from adafruit_led_animation.animation.colorcycle import ColorCycle
@@ -13,7 +13,7 @@ import time
 from .color import Color
 from .base_light import BaseLight
 from .post_models import FillByIndexItem, RainbowPostModel
-from ..tasks import create_light_task
+from ..tasks import create_light_task, cancel_tasks
 
 
 class Light(BaseLight):
@@ -21,9 +21,10 @@ class Light(BaseLight):
     num_pixels: int
     height_pixels: int
     width_pixels: int
+    background_tasks: BackgroundTasks
 
-    def __init__(self, pin_id: int, height_pixels: int, width_pixels: int):
-
+    def __init__(self, pin_id: int, height_pixels: int, width_pixels: int, background_tasks: BackgroundTasks):
+        cancel_tasks()
         num_pixels = height_pixels * width_pixels
 
         self.neopixel = NeoPixel(
@@ -32,6 +33,7 @@ class Light(BaseLight):
         self.height_pixels = height_pixels
         self.width_pixels = width_pixels
         self.num_pixels = num_pixels
+        self.background_tasks = background_tasks
 
     def loading(self, color: Color):
         self.neopixel.fill(color.values())
@@ -52,7 +54,7 @@ class Light(BaseLight):
 
             self.neopixel.show()
 
-    def rainbow_cycle(self, model: RainbowPostModel):
+    async def rainbow_cycle(self, model: RainbowPostModel):
         animation = None
 
         match model.rainbow_type:
@@ -69,7 +71,7 @@ class Light(BaseLight):
                     status_code=404, detail="Could not find suitable light"
                 )
 
-        create_light_task(animation)
+        await create_light_task(animation)
 
     def scrolling_text(
         self, cycles: int, text: str, text_speed: float, text_color: Color
@@ -119,3 +121,8 @@ class Light(BaseLight):
     def color_cycle(self, colors: List[Color], speed):
         animation = ColorCycle(self.neopixel, colors=colors, speed=speed)
         create_light_task(animation)
+    
+    def create_task(self, animation):
+        if animation is not None:
+            while True:
+                animation.animate()
