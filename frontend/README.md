@@ -28,7 +28,7 @@ Some stuff to look at if you're unsure of where to start:
 
 ## Example tasks / how to gather points
 
-- Implement and use the controller
+- Implement and use the controller: 2 p
 
 You can implement the controller that is provided, docs can be found here ([Gamepad API](https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API)).
 
@@ -40,7 +40,7 @@ Add a highscore menu to keep track of the points you scored within the game! Com
 
 Add a start and/or game over menu
 
-- Tweaks: 2-10 p
+- Tweaks: 2-8 p
 
 Examples:
 
