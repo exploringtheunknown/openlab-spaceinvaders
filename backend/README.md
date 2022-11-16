@@ -12,10 +12,7 @@ source .venv/bin/activate
 Then install the following: 
 
 ```
-pip install -r requirements.txt
-
-pre-commit install
-
+sudo -E python3 -m pip install -r requirements.txt
 ```
 
 To run the program:
