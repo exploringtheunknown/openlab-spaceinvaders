@@ -1,9 +1,4 @@
-import asyncio
-
-
-def cancel_light_tasks():
-    for task in asyncio.all_tasks():
-        task.cancel()
+from fastpi import BackgroundTask
 
 
 def animation_task(animation):
@@ -11,6 +6,6 @@ def animation_task(animation):
         animation.animate()
 
 
-def create_light_task(animation):
+def create_light_task(animation, background_task: BackgroundTask):
     if animation is not None:
-        asyncio.create_task(animation_task(animation))
+        background_task.add_task(animation_task, animation)

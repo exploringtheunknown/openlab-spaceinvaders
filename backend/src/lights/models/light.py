@@ -13,7 +13,7 @@ import time
 from .color import Color
 from .base_light import BaseLight
 from .post_models import FillByIndexItem, RainbowPostModel
-from ..tasks import cancel_light_tasks, create_light_task
+from ..tasks import create_light_task
 
 
 class Light(BaseLight):
@@ -23,7 +23,6 @@ class Light(BaseLight):
     width_pixels: int
 
     def __init__(self, pin_id: int, height_pixels: int, width_pixels: int):
-        cancel_light_tasks()
 
         num_pixels = height_pixels * width_pixels
 
