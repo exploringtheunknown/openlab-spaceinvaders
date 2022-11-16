@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from .service import example
 
 
 router = APIRouter(prefix="/highscore", tags=["Highscore"])
@@ -22,3 +23,9 @@ async def post_highscore():
 @router.delete("/highscore/{name}")
 async def delete_highscore_by_name(name: str):
     return ""
+
+@router.get("/example")
+async def test():
+    value = await example("test key", "this is some random data")
+    print(value)
+    
