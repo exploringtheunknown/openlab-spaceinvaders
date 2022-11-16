@@ -3,7 +3,7 @@ import os
 
 
 def getLight() -> BaseLight:
-    user = os.environ.get("USER")
+    user = os.environ.get("SUDO_USER")
     print(user)
     if user == "pi":
         from .models.light import Light
