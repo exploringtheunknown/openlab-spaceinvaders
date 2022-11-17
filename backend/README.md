@@ -18,7 +18,7 @@ sudo -E python3 -m pip install -r requirements.txt
 To run the program:
 
 ```
-sudo -E python3 -m uvicorn src.app:app
+sudo -E python3 -m uvicorn src.app:app --port 80 --host 0.0.0.0
 ```
 
 
