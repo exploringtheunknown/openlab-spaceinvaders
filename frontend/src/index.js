@@ -1,6 +1,7 @@
 import EnemyController from "./EnemyController.js";
 import Player from "./Player.js";
 import BulletController from "./BulletController.js";
+import EnemyBulletController from "./EnemyBulletController.js"
 import { postLightFill, postLightScrollingText } from "./ledApi.js";
 
 const canvas = document.getElementById("game");
@@ -42,25 +43,27 @@ async function gameLoop() {
 }
 function initMenu() {
   background = new Image();
-  background.src = "images/topographic-pattern.png";
+  background.src = "images/startpage.png";
   background.onload = function () {
     isSceneInitilized = true;
   };
 }
 function initLevel1() {
   background = new Image();
-  background.src = "images/topographic-pattern.png";
+  background.src = "images/background.png";
   playerBulletController = new BulletController({
     canvas,
     maxBulletsAtATime: 10,
     bulletColor: "#96FA9D",
     soundEnabled: true,
+    isEnemy: false
   });
-  enemyBulletController = new BulletController({
+  enemyBulletController = new EnemyBulletController({
     canvas,
     maxBulletsAtATime: 4,
     bulletColor: "#FFFFFF",
     soundEnabled: false,
+    isEnemy: true
   });
   enemyController = new EnemyController({
     canvas,
@@ -81,13 +84,6 @@ function initLevel1() {
 
 function sceneMenu() {
   ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-  ctx.font = "30px Arial";
-  ctx.fillStyle = "#96FA9D";
-  ctx.textBaseline = "middle";
-  ctx.textAlign = "center";
-  ctx.fillText("Queen Invaders", canvas.width / 2, canvas.height / 2 - 40);
-  ctx.font = "16px Arial";
-  ctx.fillText("touch to start.", canvas.width / 2, canvas.height / 2);
 
   function startGame() {
     canvas.removeEventListener("click", startGame);
@@ -111,25 +107,32 @@ function sceneLevel1() {
 
 let isGameOverRun = false
 async function sceneGameOver() {
+  background = new Image();
+  background.src = "images/gameover.png";
   if (!isGameOverRun) {
     await postLightScrollingText({
       text: "GAME OVER",
       text_speed: 0.12,
       color: {
-        r: 255, g: 0, b: 0
+        r: 255, g: 100, b: 0
       }
     })
     isGameOverRun = true
   }
   ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "white";
-  ctx.font = "70px Arial";
-  ctx.textBaseline = "middle";
-  ctx.textAlign = "center";
-  ctx.fillText("Game Over", game.width / 2, game.height / 2);
 }
-
-function sceneVictory() {
+let isGameWon = false
+async function sceneVictory() {
+  if (!isGameWon) {
+    await postLightScrollingText({
+      text: "WINNER",
+      text_speed: 0.12,
+      color: {
+        r: 255, g: 100, b: 0
+      }
+    })
+    isGameWon = true
+  }
   ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "white";
   ctx.font = "70px Arial";

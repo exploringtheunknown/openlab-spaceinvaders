@@ -1,7 +1,7 @@
 import Bullet from "./PlayerBullet.js";
 import EnemyBullet from "./EnemyBullet.js"
 
-export default class BulletController {
+export default class EnemyBulletController {
   bullets = [];
   timeTillNextBulletAllowed = 0;
 
@@ -44,7 +44,7 @@ export default class BulletController {
       this.timeTillNextBulletAllowed <= 0 &&
       this.bullets.length < this.maxBulletsAtATime
     ) {
-      const bullet = new Bullet(this.canvas, x, y, velocity, this.bulletColor);
+      const bullet = new EnemyBullet(this.canvas, x, y, velocity, this.bulletColor);
       this.bullets.push(bullet);
       if (this.soundEnabled) {
         this.shootSound.currentTime = 0;

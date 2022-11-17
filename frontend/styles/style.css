@@ -6,10 +6,13 @@ h1 {
   margin: 0px;
   margin-bottom: 10px;
   font-size: 2.9em;
-  font-family: "Helvetica";
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
 body {
+  background-color: black;
+  color: purple;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   height: 100vh;
   display: flex;
   padding: 0px;

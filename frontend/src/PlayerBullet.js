@@ -1,4 +1,4 @@
-export default class Bullet {
+export default class PlayerBullet {
   constructor(canvas, x, y, velocity, bulletColor) {
     this.canvas = canvas;
     this.x = x;
@@ -6,14 +6,18 @@ export default class Bullet {
     this.velocity = velocity;
     this.bulletColor = bulletColor;
 
-    this.width = 5;
-    this.height = 20;
+    this.width = 20;
+    this.height = 35;
+
+    this.image = new Image();
+    this.image.src = `images/playerbullet.png`;
   }
 
   draw(ctx) {
+    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     this.y -= this.velocity;
-    ctx.fillStyle = this.bulletColor;
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    // ctx.fillStyle = this.bulletColor;
+    // ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 
   collideWith(sprite) {
