@@ -26,6 +26,8 @@ async def delete_highscore_by_name(name: str):
 
 @router.get("/example")
 async def test():
-    value = await example("test key", "this is some random data")
+    data = { text: "this is some random data" }
+    value = await example("test key", data.to_string())
     print(value)
+    return value
     

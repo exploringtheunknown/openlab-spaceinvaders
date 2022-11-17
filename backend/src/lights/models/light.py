@@ -1,4 +1,4 @@
-from fastapi import HTTPException, BackgroundTasks
+from fastapi import HTTPException
 from adafruit_blinka.microcontroller.generic_micropython import Pin
 from neopixel import GRB, NeoPixel
 from adafruit_led_animation.animation.colorcycle import ColorCycle
@@ -21,9 +21,8 @@ class Light(BaseLight):
     num_pixels: int
     height_pixels: int
     width_pixels: int
-    background_tasks: BackgroundTasks
 
-    def __init__(self, pin_id: int, height_pixels: int, width_pixels: int, background_tasks: BackgroundTasks):
+    def __init__(self, pin_id: int, height_pixels: int, width_pixels: int):
         cancel_tasks()
         num_pixels = height_pixels * width_pixels
 
@@ -33,7 +32,6 @@ class Light(BaseLight):
         self.height_pixels = height_pixels
         self.width_pixels = width_pixels
         self.num_pixels = num_pixels
-        self.background_tasks = background_tasks
 
     def loading(self, color: Color):
         self.neopixel.fill(color.values())
@@ -73,8 +71,8 @@ class Light(BaseLight):
 
         await create_light_task(animation)
 
-    def scrolling_text(
-        self, cycles: int, text: str, text_speed: float, text_color: Color
+    async def scrolling_text(
+        self, text: str, text_speed: float, text_color: Color
     ):
         font = ImageFont.truetype("Quicksand-Regular.ttf", 8)
 
@@ -93,36 +91,53 @@ class Light(BaseLight):
 
         draw.text((self.width_pixels, -1), text, font=font, fill=255)
         image.save("img.png", "PNG")
-        offset_x = 0
 
-        for c in range(cycles):
-            for x in range(self.width_pixels):
-                for y in range(self.height_pixels):
-                    if image.getpixel((x + offset_x, y)) == 255:
-                        self.neopixel[self.getIndex(x, y)] = text_color.values()
+        animation = ScrollingTextAnimation(self.neopixel, self.width_pixels, self.height_pixels, image, text_speed, text_color)
+        await create_light_task(animation)
+            
 
-                    else:
-                        self.neopixel[self.getIndex(x, y)] = (0, 0, 0)
+    async def color_cycle(self, colors: List[Color], speed):
+        animation = ColorCycle(self.neopixel, colors=[color.values() for color in colors], speed=speed)
+        await create_light_task(animation)
+             
+             
+class ScrollingTextAnimation():
+    neopixel: NeoPixel
+    width_pixels: int
+    height_pixels: int
+    image: Image
+    text_speed: float
+    text_color: Color
+    offset_x: int    
+    def __init__(self, neopixel: NeoPixel, width_pixels: int, height_pixels: int, image: Image, text_speed: float, text_color: Color):
+        self.neopixel = neopixel
+        self.width_pixels = width_pixels
+        self.height_pixels = height_pixels
+        self.image = image
+        self.text_speed = text_speed
+        self.text_color = text_color
+        self.offset_x = 0
+    
+    def animate(self):
+        for x in range(self.width_pixels):
+            for y in range(self.height_pixels):
+                if self.image.getpixel((x + self.offset_x, y)) == 255:
+                    self.neopixel[self.getIndex(x, y)] = self.text_color.values()
+                    
+                else:
+                    self.neopixel[self.getIndex(x, y)] = (0, 0, 0)
 
-            offset_x += 1
-            if offset_x + self.width_pixels > image.size[0]:
-                offset_x = 0
+        self.offset_x += 1
+        if self.offset_x + self.width_pixels > self.image.size[0]:
+            self.offset_x = 0
 
-            self.neopixel.show()
-            time.sleep(text_speed)  # scrolling text speed
-
+        self.neopixel.show()
+        time.sleep(self.text_speed)
+        
+    
     def getIndex(self, x, y):
         x = self.width_pixels - x - 1
         if x % 2 != 0:
             return (x * 8) + y
         else:
             return (x * 8) + (7 - y)
-
-    def color_cycle(self, colors: List[Color], speed):
-        animation = ColorCycle(self.neopixel, colors=colors, speed=speed)
-        create_light_task(animation)
-    
-    def create_task(self, animation):
-        if animation is not None:
-            while True:
-                animation.animate()
