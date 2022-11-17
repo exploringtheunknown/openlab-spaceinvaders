@@ -60,10 +60,10 @@ Trash the old start menu and design a new, eye-catching one. Don’t like the lo
 
 *Style/Design points*
 
-- Rig name / team name: 1 p
+- Team name: 1 p
 - Sprite design: 2 p
 - UI design: 2 p
-- Other implementations: 2-5 p
+- Other implementations: 5 p
 
 Total: up to 10 p
 
@@ -72,12 +72,12 @@ Total: up to 10 p
 Game:
 - Add highscore : 1 p
 - Menu : 2 p
-- Tweaks : 2-10 p
+- Tweaks : 10 p
 
 Total: up to 13 p
 
 Lights:
-- Game display : 2-5 p 
-- Complexity and responsiveness: 2-10 p
+- Game display : 5 p 
+- Complexity and responsiveness: 10 p
 
 Total: up to 15 p

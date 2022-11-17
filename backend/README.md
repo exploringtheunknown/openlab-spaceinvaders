@@ -18,7 +18,7 @@ sudo -E python3 -m pip install -r requirements.txt
 To run the program:
 
 ```
-sudo -E python3 -m uvicorn src.app:app
+sudo -E python3 -m uvicorn src.app:app --port 80 --host 0.0.0.0
 ```
 
 
@@ -34,7 +34,7 @@ There are 4 premade functions that will display light effects on the LED grid 'r
 
 ### Example tasks / how to gather points
 
-- Create displays of game animations: 2-5 p
+- Create displays of game animations: 5 p
 
 Examples: 
 
@@ -43,6 +43,6 @@ Displaying the movement of the player or bullets on the grid
 Displaying the current score of the player 
 Displaying animations when firing or when hit
 
-- Complexity and responsiveness: 2-10 p
+- Complexity and responsiveness: 10 p
 
 You can earn points depending on the complexity of the light effects you create and based on their timing with the gameplay.  
