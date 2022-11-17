@@ -1,11 +1,22 @@
-from fastpi import BackgroundTask
+import asyncio
+from functools import lru_cache
 
+@lru_cache
+def getEventLoop():
+    return asyncio.new_event_loop()
 
-def animation_task(animation):
+loop = getEventLoop()
+task = None;
+
+def cancel_tasks():
+    tasks = [task.cancel() for task in asyncio.all_tasks() if task.get_name() == 'light']
+    
+async def animation_task(animation):
     while True:
         animation.animate()
+        await asyncio.sleep(0.001)
 
-
-def create_light_task(animation, background_task: BackgroundTask):
+async def create_light_task(animation):
     if animation is not None:
-        background_task.add_task(animation_task, animation)
+        asyncio.create_task(animation_task(animation), name="light")
+    

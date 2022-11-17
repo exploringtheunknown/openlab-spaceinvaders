@@ -20,7 +20,6 @@ class FillByIndexPostModel(BaseModel):
 
 class ScrollingTextPostModel(BaseModel):
     text: str
-    cycles: int
     text_speed: float
     color: Color
 

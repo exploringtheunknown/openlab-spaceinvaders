@@ -1,12 +1,11 @@
 from functools import lru_cache
 from aioredis import Redis, from_url
-from pydantic import BaseModel
 
 
-class Redis(BaseModel):
+class Redis():
     redis: Redis
 
-    async def __init__(self):
+    def __init__(self):
         self.redis = from_url("redis://localhost")
 
     async def get(self, key: str):
