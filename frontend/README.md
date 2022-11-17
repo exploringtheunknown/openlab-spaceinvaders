@@ -40,7 +40,7 @@ Add a highscore menu to keep track of the points you scored within the game! Com
 
 Add a start and/or game over menu
 
-- Tweaks: 2-8 p
+- Tweaks: 8 p
 
 Examples:
 
