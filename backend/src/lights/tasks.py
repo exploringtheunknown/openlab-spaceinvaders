@@ -17,7 +17,6 @@ async def animation_task(animation):
         await asyncio.sleep(0.001)
 
 async def create_light_task(animation):
-    print('createing task')
     if animation is not None:
         asyncio.create_task(animation_task(animation), name="light")
     

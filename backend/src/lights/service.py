@@ -5,7 +5,6 @@ from fastapi import BackgroundTasks
 
 def getLight() -> BaseLight:
     user = os.environ.get("SUDO_USER")
-    print(user)
     if user == "pi":
         from .models.light import Light
 
