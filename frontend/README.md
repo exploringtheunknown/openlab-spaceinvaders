@@ -26,6 +26,11 @@ Some stuff to look at if you're unsure of where to start:
 - The gameLoop switch could perhaps be expanded with more states?
 - The enemyController accepts a object with customizable values. Perhaps the same thing can be done with bullet controllers?
 
+## Using the LED grid
+
+Access the backend API documentation by using same port address as the backend. Update your BASE_URL in ledApi file to that port.
+
+
 ## Example tasks / how to gather points
 
 - Implement and use the controller: 2 p
