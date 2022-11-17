@@ -1,6 +1,7 @@
 import EnemyController from "./EnemyController.js";
 import Player from "./Player.js";
 import BulletController from "./BulletController.js";
+import { postLightFill, postLightScrollingText } from "./ledApi.js";
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
@@ -16,7 +17,13 @@ let background,
 let scene = "menu";
 let isSceneInitilized = false;
 
-function gameLoop() {
+let hasSentStartRequest = false
+async function gameLoop() {
+  // reset LED grid
+  if (!hasSentStartRequest) {
+    await postLightFill({ color: { r: 0, g: 0, b: 0 } })
+    hasSentStartRequest = true
+  }
   switch (scene) {
     case "menu":
       if (!isSceneInitilized) initMenu();
@@ -102,7 +109,18 @@ function sceneLevel1() {
   if (enemyController.enemyRows.length === 0) scene = "win";
 }
 
-function sceneGameOver() {
+let isGameOverRun = false
+async function sceneGameOver() {
+  if (!isGameOverRun) {
+    await postLightScrollingText({
+      text: "GAME OVER",
+      text_speed: 0.12,
+      color: {
+        r: 255, g: 0, b: 0
+      }
+    })
+    isGameOverRun = true
+  }
   ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "white";
   ctx.font = "70px Arial";
